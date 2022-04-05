@@ -25,7 +25,7 @@ class BrowserCookiesTest extends TestCase
         $browserCookies = new BrowserCookies(['COOKIE'], $netteRequest);
         $cookieJar = $browserCookies->create();
 
-        Assert::true($cookieJar instanceof CookieJar);
+        Assert::type(CookieJar::class, $cookieJar);
         Assert::true($cookieJar->hasCookies());
         Assert::same(1, $cookieJar->count());
     }

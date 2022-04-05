@@ -1,0 +1,17 @@
+includes:
+  - ./vendor/phpstan/phpstan-strict-rules/rules.neon
+  - ./vendor/phpstan/phpstan-nette/extension.neon
+
+parameters:
+  level: 8
+  tmpDir: %currentWorkingDirectory%/tmp
+  checkMissingIterableValueType: false
+  treatPhpDocTypesAsCertain: false
+  ignoreErrors:
+    -
+      # https://github.com/phpstan/phpstan/issues/4121
+      message: '#Mockery#'
+      path: tests/**/
+    -
+      message: '#Kasa\\Session#'
+      path: src/Plugin/SessionPlugin.php

@@ -25,10 +25,20 @@
         "nette/bootstrap": "^3.0",
         "freezy-bee/httplug": "^2.0",
         "nyholm/psr7": "^1.1",
-        "php-http/guzzle6-adapter": "^2.0"
+        "php-http/guzzle6-adapter": "^2.0",
+        "nette/http": "^3.1"
     },
     "require-dev": {
         "nette/tester": "^2.1",
-        "mockery/mockery": "^1.2"
+        "mockery/mockery": "^1.2",
+        "phpstan/phpstan-nette": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.1"
+    },
+    "scripts": {
+        "phpcbf": "phpcbf",
+        "phpcs": "phpcs",
+        "phpstan": "phpstan --ansi --configuration=phpstan.neon analyse src/ tests/",
+        "test": "./vendor/bin/tester -C ./tests/",
+        "tests": ["@test", "@phpcs", "@phpstan"]
     }
 }
