@@ -1,0 +1,34 @@
+{
+    "name": "hptroniccz/slimsdk",
+    "description": "SDK for SlimAPI",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lukas Kraus",
+            "email": "kraus.lukas@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SlimSdk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SlimSdk\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "ext-json": "*",
+        "nette/bootstrap": "^3.0",
+        "freezy-bee/httplug": "^2.0",
+        "nyholm/psr7": "^1.1",
+        "php-http/guzzle6-adapter": "^2.0"
+    },
+    "require-dev": {
+        "nette/tester": "^2.1",
+        "mockery/mockery": "^1.2"
+    }
+}
