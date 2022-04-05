@@ -29,6 +29,21 @@ class ResponseMediator
     }
 
     /**
+     * @param bool $asArray
+     * @return array|stdClass|string
+     * @throws JsonException
+     */
+    public function getParsedBody(bool $asArray = true)
+    {
+        $body = (string) $this->response->getBody();
+        if (stripos($this->response->getHeaderLine('Content-Type'), 'application/json') === 0) {
+            return json_decode($body, $asArray, 512, JSON_THROW_ON_ERROR);
+        }
+
+        return $body;
+    }
+
+    /**
      * @throws BadRequestException when response code is 400
      * @throws UnprocessableEntityException when response code is 422
      * @throws ClientErrorException when response code is 4xx
@@ -46,13 +61,10 @@ class ResponseMediator
 
         if (isset($code2error[$statusCode])) {
             $exceptionClass = $code2error[$statusCode];
-
         } elseif ($statusCode >= 400 && $statusCode < 500) {
             $exceptionClass = ClientErrorException::class;
-
         } elseif ($statusCode >= 500 && $statusCode < 600) {
             $exceptionClass = ServerErrorException::class;
-
         } elseif ($statusCode >= 300) {
             $exceptionClass = HttpException::class;
         }
@@ -76,23 +88,8 @@ class ResponseMediator
             throw new $exceptionClass(
                 sprintf('Unsuccessful response (%s)', json_encode($data)),
                 $this->request,
-                $this->response
+                $this->response,
             );
         }
-    }
-
-    /**
-     * @param bool $asArray
-     * @return array|stdClass|string
-     * @throws JsonException
-     */
-    public function getParsedBody(bool $asArray = true)
-    {
-        $body = (string) $this->response->getBody();
-        if (stripos($this->response->getHeaderLine('Content-Type'), 'application/json') === 0) {
-            return json_decode($body, $asArray, 512, JSON_THROW_ON_ERROR);
-        }
-
-        return $body;
     }
 }

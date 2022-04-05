@@ -26,7 +26,7 @@ class ResponseMediatorTest extends TestCase
     {
         $mediator = new ResponseMediator(
             Mockery::mock(RequestInterface::class),
-            new Response(200, ['Content-Type' => 'application/json'], '{"foo":"bar"}')
+            new Response(200, ['Content-Type' => 'application/json'], '{"foo":"bar"}'),
         );
 
         Assert::same(['foo' => 'bar'], $mediator->getParsedBody());
@@ -36,17 +36,20 @@ class ResponseMediatorTest extends TestCase
     {
         $mediator = new ResponseMediator(
             Mockery::mock(RequestInterface::class),
-            new Response(200, ['Content-Type' => 'application/json'], '{"foo":"bar"}')
+            new Response(200, ['Content-Type' => 'application/json'], '{"foo":"bar"}'),
         );
 
-        Assert::same('bar', $mediator->getParsedBody(false)->foo);
+        $body = $mediator->getParsedBody(false);
+        Assert::type('object', $body);
+        Assert::true(isset($body->foo));
+        Assert::same('bar', ((array) $body)['foo']);
     }
 
     public function testGetParsedBodyEmpty(): void
     {
         $mediator = new ResponseMediator(
             Mockery::mock(RequestInterface::class),
-            new Response(200, [], 'OK')
+            new Response(200, [], 'OK'),
         );
 
         Assert::same('OK', $mediator->getParsedBody());
@@ -57,7 +60,7 @@ class ResponseMediatorTest extends TestCase
         Assert::exception(static function (): void {
             new ResponseMediator(
                 Mockery::mock(RequestInterface::class),
-                new Response(400)
+                new Response(400),
             );
         }, BadRequestException::class, 'Unsuccessful response ({"code":400,"phrase":"Bad Request"})');
     }
@@ -68,11 +71,11 @@ class ResponseMediatorTest extends TestCase
             static function (): void {
                 new ResponseMediator(
                     Mockery::mock(RequestInterface::class),
-                    new Response(422, ['Content-Type' => 'application/json'], '{"message":"Something happened", "id": "xyz"}')
+                    new Response(422, ['Content-Type' => 'application/json'], '{"message":"Something happened", "id": "xyz"}'),
                 );
             },
             UnprocessableEntityException::class,
-            'Unsuccessful response ({"code":422,"phrase":"Unprocessable Entity","msg":"Something happened","id":"xyz"})'
+            'Unsuccessful response ({"code":422,"phrase":"Unprocessable Entity","msg":"Something happened","id":"xyz"})',
         );
     }
 
@@ -81,7 +84,7 @@ class ResponseMediatorTest extends TestCase
         Assert::exception(static function (): void {
             new ResponseMediator(
                 Mockery::mock(RequestInterface::class),
-                new Response(450)
+                new Response(450),
             );
         }, ClientErrorException::class, 'Unsuccessful response ({"code":450,"phrase":""})');
     }
@@ -91,7 +94,7 @@ class ResponseMediatorTest extends TestCase
         Assert::exception(static function (): void {
             new ResponseMediator(
                 Mockery::mock(RequestInterface::class),
-                new Response(550)
+                new Response(550),
             );
         }, ServerErrorException::class, 'Unsuccessful response ({"code":550,"phrase":""})');
     }
@@ -101,7 +104,7 @@ class ResponseMediatorTest extends TestCase
         Assert::exception(static function (): void {
             new ResponseMediator(
                 Mockery::mock(RequestInterface::class),
-                new Response(301)
+                new Response(301),
             );
         }, HttpException::class, 'Unsuccessful response ({"code":301,"phrase":"Moved Permanently"})');
     }

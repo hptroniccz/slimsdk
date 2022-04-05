@@ -33,7 +33,7 @@ abstract class Api
         if ($data !== []) {
             $request = $request
                 ->withHeader('content-type', 'application/json')
-                ->withBody($this->streamFactory->createStream(json_encode($data)));
+                ->withBody($this->streamFactory->createStream(json_encode($data, JSON_THROW_ON_ERROR)));
         }
 
         return $request;

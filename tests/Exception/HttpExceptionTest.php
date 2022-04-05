@@ -53,7 +53,7 @@ class HttpExceptionTest extends TestCase
         $stream = Mockery::mock(StreamInterface::class);
         $stream
             ->shouldReceive('__toString')
-            ->andReturn(json_encode($this->reponse));
+            ->andReturn(json_encode($this->reponse, JSON_THROW_ON_ERROR));
 
         $response = Mockery::mock(ResponseInterface::class);
         $response
