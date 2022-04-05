@@ -50,6 +50,12 @@ abstract class Api
         return $this->client->sendRequest($request);
     }
 
+    protected function get(string $path): ResponseMediator
+    {
+        $request = $this->createRequest('GET', $path);
+        return $this->createResponse($request);
+    }
+
     protected function post(string $path, array $data = []): ResponseMediator
     {
         $request = $this->createRequest('POST', $path, $data);
