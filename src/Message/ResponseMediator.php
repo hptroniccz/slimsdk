@@ -12,6 +12,7 @@ use SlimSdk\Exception\ClientErrorException;
 use SlimSdk\Exception\HttpException;
 use SlimSdk\Exception\ServerErrorException;
 use SlimSdk\Exception\UnprocessableEntityException;
+use stdClass;
 
 class ResponseMediator
 {
@@ -81,14 +82,15 @@ class ResponseMediator
     }
 
     /**
-     * @return array|string
+     * @param bool $asArray
+     * @return array|stdClass|string
      * @throws JsonException
      */
-    public function getParsedBody()
+    public function getParsedBody(bool $asArray = true)
     {
         $body = (string) $this->response->getBody();
         if (stripos($this->response->getHeaderLine('Content-Type'), 'application/json') === 0) {
-            return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+            return json_decode($body, $asArray, 512, JSON_THROW_ON_ERROR);
         }
 
         return $body;

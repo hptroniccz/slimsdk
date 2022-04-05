@@ -32,6 +32,16 @@ class ResponseMediatorTest extends TestCase
         Assert::same(['foo' => 'bar'], $mediator->getParsedBody());
     }
 
+    public function testGetParsedBodyAsObject(): void
+    {
+        $mediator = new ResponseMediator(
+            Mockery::mock(RequestInterface::class),
+            new Response(200, ['Content-Type' => 'application/json'], '{"foo":"bar"}')
+        );
+
+        Assert::same('bar', $mediator->getParsedBody(false)->foo);
+    }
+
     public function testGetParsedBodyEmpty(): void
     {
         $mediator = new ResponseMediator(
