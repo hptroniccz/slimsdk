@@ -59,6 +59,7 @@ class ResponseMediator
         if ($exceptionClass !== null) {
             $data = [
                 'code' => $statusCode,
+                'phrase' => $this->response->getReasonPhrase(),
             ];
 
             $body = $this->getParsedBody();
