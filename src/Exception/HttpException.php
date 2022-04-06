@@ -1,4 +1,6 @@
 <?php
+// https://datatracker.ietf.org/doc/html/rfc7807#section-3.1
+
 
 declare(strict_types=1);
 
@@ -16,21 +18,38 @@ class HttpException extends BaseHttpException
 
     public function getResponseCode(): int
     {
-        return $this->getParsedResponse()->code;
+        if ($this->isAppProblem()) {
+            return $this->response->getStatusCode();
+        } else {
+            return $this->getParsedResponse()->code;
+        }
     }
 
     public function getResponseError(): string
     {
-        return $this->getParsedResponse()->error;
+        if ($this->isAppProblem()) {
+            return $this->getParsedResponse()->title;
+        } else {
+            return $this->getParsedResponse()->error;
+        }
     }
 
     public function getResponseMessage(): string
     {
-        return $this->getParsedResponse()->message;
+        if ($this->isAppProblem()) {
+            return $this->getParsedResponse()->detail;
+        } else {
+            return $this->getParsedResponse()->message;
+        }
     }
 
     public function getResponseId(): string
     {
-        return $this->getParsedResponse()->id;
+        return $this->getParsedResponse()->id ?? '';
+    }
+
+    private function isAppProblem(): bool
+    {
+        return strpos($this->response->getHeaderLine('Content-Type'), 'application/problem+json') === 0;
     }
 }

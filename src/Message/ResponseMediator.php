@@ -38,6 +38,8 @@ class ResponseMediator
         $body = (string) $this->response->getBody();
         if (stripos($this->response->getHeaderLine('Content-Type'), 'application/json') === 0) {
             return json_decode($body, $asArray, 512, JSON_THROW_ON_ERROR);
+        } elseif (strpos($this->response->getHeaderLine('Content-Type'), 'application/problem+json') === 0) {
+            return json_decode($body, $asArray, 512, JSON_THROW_ON_ERROR);
         }
 
         return $body;
@@ -77,7 +79,7 @@ class ResponseMediator
 
             $body = $this->getParsedBody();
             if (is_array($body)) {
-                $data['msg'] = $body['message'] ?? '';
+                $data['msg'] = $body['message'] ?? $body['detail'] ?? $body['title'] ?? '';
                 $data['id'] = $body['id'] ?? '';
                 if (isset($body['exception'])) {
                     $data['file'] = sprintf('%s(%d)', $body['exception']['file'] ?? '', $body['exception']['line'] ?? 0);

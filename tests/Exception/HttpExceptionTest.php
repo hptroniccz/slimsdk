@@ -24,36 +24,50 @@ class HttpExceptionTest extends TestCase
         'message' => 'Testing HttpException',
     ];
 
+    private array $reponseRfc7807 = [
+        'type' => 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+        'title' => 'An error occurred',
+        'detail' => 'Testing HttpException',
+    ];
+
     public function testGetParsedResponse(): void
     {
         $exception = $this->createException();
         Assert::equal($this->reponse, (array) $exception->getParsedResponse());
+        $exception = $this->createException(true);
+        Assert::equal($this->reponseRfc7807, (array) $exception->getParsedResponse());
     }
 
     public function testResponseCode(): void
     {
         $exception = $this->createException();
         Assert::equal($this->reponse['code'], $exception->getResponseCode());
+        $exception = $this->createException(true);
+        Assert::equal(422, $exception->getResponseCode());
     }
 
     public function testResponseError(): void
     {
         $exception = $this->createException();
         Assert::equal($this->reponse['error'], $exception->getResponseError());
+        $exception = $this->createException(true);
+        Assert::equal($this->reponseRfc7807['title'], $exception->getResponseError());
     }
 
     public function testResponseMessage(): void
     {
         $exception = $this->createException();
         Assert::equal($this->reponse['message'], $exception->getResponseMessage());
+        $exception = $this->createException(true);
+        Assert::equal($this->reponseRfc7807['detail'], $exception->getResponseMessage());
     }
 
-    private function createException(): HttpException
+    private function createException(bool $rfc7807 = false): HttpException
     {
         $stream = Mockery::mock(StreamInterface::class);
         $stream
             ->shouldReceive('__toString')
-            ->andReturn(json_encode($this->reponse, JSON_THROW_ON_ERROR));
+            ->andReturn(json_encode($rfc7807 ? $this->reponseRfc7807 : $this->reponse, JSON_THROW_ON_ERROR));
 
         $response = Mockery::mock(ResponseInterface::class);
         $response
@@ -63,6 +77,18 @@ class HttpExceptionTest extends TestCase
         $response
             ->shouldReceive('getStatusCode')
             ->andReturn(422);
+
+        if ($rfc7807) {
+            $response
+                ->shouldReceive('getHeaderLine')
+                ->with('Content-Type')
+                ->andReturn('application/problem+json');
+        } else {
+            $response
+                ->shouldReceive('getHeaderLine')
+                ->with('Content-Type')
+                ->andReturn('application/json');
+        }
 
         $request = Mockery::mock(RequestInterface::class);
         return new HttpException('Testing HttpException', $request, $response);

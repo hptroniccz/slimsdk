@@ -79,6 +79,28 @@ class ResponseMediatorTest extends TestCase
         );
     }
 
+    public function testProcessUnprocessableEntityApplicationProblem(): void
+    {
+        Assert::exception(
+            static function (): void {
+                new ResponseMediator(
+                    Mockery::mock(RequestInterface::class),
+                    new Response(
+                        422,
+                        ['Content-Type' => 'application/problem+json'],
+                        '{
+                                 "type":"https:\/\/tools.ietf.org\/html\/rfc2616#section-10",
+                                 "title":"An error occurred",
+                                 "detail":"Something happened"
+                        }',
+                    ),
+                );
+            },
+            UnprocessableEntityException::class,
+            'Unsuccessful response ({"code":422,"phrase":"Unprocessable Entity","msg":"Something happened","id":""})',
+        );
+    }
+
     public function testProcessClientErrorException(): void
     {
         Assert::exception(static function (): void {
