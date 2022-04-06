@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Message;
+namespace HPTronic\SlimSdk\Message;
 
+use HPTronic\SlimSdk\Exception\BadRequestException;
+use HPTronic\SlimSdk\Exception\ClientErrorException;
+use HPTronic\SlimSdk\Exception\HttpException;
+use HPTronic\SlimSdk\Exception\ServerErrorException;
+use HPTronic\SlimSdk\Exception\UnprocessableEntityException;
 use JsonException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use SlimSdk\Exception\BadRequestException;
-use SlimSdk\Exception\ClientErrorException;
-use SlimSdk\Exception\HttpException;
-use SlimSdk\Exception\ServerErrorException;
-use SlimSdk\Exception\UnprocessableEntityException;
 use stdClass;
 
 class ResponseMediator

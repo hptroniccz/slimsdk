@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Exception;
+namespace HPTronic\SlimSdk\Exception;
 
 use Http\Client\Exception\HttpException as BaseHttpException;
 use stdClass;

@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Tests;
+namespace HPTronic\SlimSdk\Tests;
 
 use Mockery;
 use Tester;

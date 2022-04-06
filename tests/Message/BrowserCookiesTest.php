@@ -4,13 +4,13 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Tests\Sdk\Message;
+namespace HPTronic\SlimSdk\Tests\Sdk\Message;
 
+use HPTronic\SlimSdk\Message\BrowserCookies;
+use HPTronic\SlimSdk\Tests\TestCase;
 use Http\Message\CookieJar;
 use Mockery;
 use Nette\Http\IRequest;
-use SlimSdk\Message\BrowserCookies;
-use SlimSdk\Tests\TestCase;
 use Tester\Assert;
 
 require_once __DIR__ . '/../bootstrap.php';

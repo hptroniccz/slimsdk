@@ -4,20 +4,20 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Tests\Sdk\Message;
+namespace HPTronic\SlimSdk\Tests\Sdk\Message;
 
 require_once __DIR__ . '/../bootstrap.php';
 
+use HPTronic\SlimSdk\Exception\BadRequestException;
+use HPTronic\SlimSdk\Exception\ClientErrorException;
+use HPTronic\SlimSdk\Exception\HttpException;
+use HPTronic\SlimSdk\Exception\ServerErrorException;
+use HPTronic\SlimSdk\Exception\UnprocessableEntityException;
+use HPTronic\SlimSdk\Message\ResponseMediator;
+use HPTronic\SlimSdk\Tests\TestCase;
 use Mockery;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
-use SlimSdk\Exception\BadRequestException;
-use SlimSdk\Exception\ClientErrorException;
-use SlimSdk\Exception\HttpException;
-use SlimSdk\Exception\ServerErrorException;
-use SlimSdk\Exception\UnprocessableEntityException;
-use SlimSdk\Message\ResponseMediator;
-use SlimSdk\Tests\TestCase;
 use Tester\Assert;
 
 class ResponseMediatorTest extends TestCase

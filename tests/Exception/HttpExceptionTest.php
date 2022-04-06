@@ -4,14 +4,14 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Tests\Sdk\Exception;
+namespace HPTronic\SlimSdk\Tests\Sdk\Exception;
 
+use HPTronic\SlimSdk\Exception\HttpException;
+use HPTronic\SlimSdk\Tests\TestCase;
 use Mockery;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use SlimSdk\Exception\HttpException;
-use SlimSdk\Tests\TestCase;
 use Tester\Assert;
 
 require_once __DIR__ . '/../bootstrap.php';
