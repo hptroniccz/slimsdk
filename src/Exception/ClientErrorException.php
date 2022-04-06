@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Exception;
+namespace HPTronic\SlimSdk\Exception;
 
 /**
  * Thrown when there is a client error (4xx).

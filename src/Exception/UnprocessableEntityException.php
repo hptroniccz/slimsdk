@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Exception;
+namespace HPTronic\SlimSdk\Exception;
 
 /**
  * Thrown when an entity was unable to process (422).

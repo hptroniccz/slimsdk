@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Api;
+namespace HPTronic\SlimSdk;
 
+use HPTronic\SlimSdk\Message\ResponseMediator;
 use Psr\Http\Client\ClientInterface as Client;
 use Psr\Http\Message\RequestFactoryInterface as RequestFactory;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\StreamFactoryInterface as StreamFactory;
-use SlimSdk\Message\ResponseMediator;
 
 abstract class Api
 {

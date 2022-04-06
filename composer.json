@@ -11,12 +11,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "SlimSdk\\": "src/"
+            "HPTronic\\SlimSdk\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SlimSdk\\Tests\\": "tests/"
+            "HPTronic\\SlimSdk\\Tests\\": "tests/"
         }
     },
     "require": {

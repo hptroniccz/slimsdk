@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimSdk\Message;
+namespace HPTronic\SlimSdk\Message;
 
 use Http\Message\Cookie;
 use Http\Message\CookieJar;
