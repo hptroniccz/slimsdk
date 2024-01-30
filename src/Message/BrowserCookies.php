@@ -29,7 +29,7 @@ class BrowserCookies
         $browserCookies = $this->browserRequest->getCookies();
         foreach ($this->selectedCookies as $key) {
             if (isset($browserCookies[$key])) {
-                $cookies[] = new Cookie($key, $browserCookies[$key]);
+                $cookies[] = new Cookie($key, $browserCookies[$key], null, null, '');
             }
         }
 
