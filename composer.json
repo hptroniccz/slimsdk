@@ -20,18 +20,19 @@
         }
     },
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.0",
         "ext-json": "*",
         "nette/bootstrap": "^3.0",
         "nyholm/psr7": "^1.1",
-        "php-http/guzzle6-adapter": "^2.0",
-        "nette/http": "^3.1"
+        "nette/http": "^3.1",
+        "php-http/guzzle7-adapter": "^1.0"
     },
     "require-dev": {
         "nette/tester": "^2.1",
         "mockery/mockery": "^1.2",
         "phpstan/phpstan-nette": "^1.0",
-        "phpstan/phpstan-strict-rules": "^1.1"
+        "phpstan/phpstan-strict-rules": "^1.1",
+        "php-http/message": "^1.16"
     },
     "scripts": {
         "phpcbf": "phpcbf",
@@ -39,10 +40,5 @@
         "phpstan": "phpstan --ansi --configuration=phpstan.neon analyse src/ tests/",
         "test": "./vendor/bin/tester -C ./tests/",
         "tests": ["@test", "@phpcs", "@phpstan"]
-    },
-    "config": {
-        "platform": {
-            "php": "7.4"
-        }
     }
 }
