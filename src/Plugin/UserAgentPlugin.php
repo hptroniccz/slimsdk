@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datart\Sdk\Plugin;
+namespace HPTronic\SlimSdk\Plugin;
 
 use Http\Client\Common\Plugin;
 use Http\Promise\Promise;
