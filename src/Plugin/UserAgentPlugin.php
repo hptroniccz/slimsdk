@@ -20,7 +20,7 @@ class UserAgentPlugin implements Plugin
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
     {
-        $request = $request->withHeader('X-User-Agent', $this->request->getHeader('User-Agent'));
+        $request = $request->withHeader('X-User-Agent', $this->request->getHeader('User-Agent') ?? '');
 
         return $next($request);
     }
